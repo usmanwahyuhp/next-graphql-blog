@@ -1,13 +1,8 @@
 import Head from 'next/head';
 import { PostCard, Categories, PostWidget } from '../components';
+import { getPost, getPosts } from '../services';
 
-//demo of fetching data from graphQL
-const posts = [
-  {title: 'React Testing', excerpt: 'Learn React Testing'},
-  {title: 'React with Tailwind', excerpt: 'Learn React with Tailwind'},
-];
-
-export default function Home() {
+export default function Home({ posts }) {
   return (
     <div className="container mx-auto px-10 mb-8">
       <Head>
@@ -28,4 +23,12 @@ export default function Home() {
 
     </div>
   )
+}
+
+export async function getStaticProps() {
+  const posts = (await getPosts()) || [];
+
+  return {
+    props: { posts }
+  }
 }
